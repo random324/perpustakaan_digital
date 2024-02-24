@@ -48,7 +48,7 @@
             <tr>
                 <td width="100">Role User</td>
                 <td width="1">:</td>
-                <td><?php echo $_SESSION['user']['role']; ?></td>
+                <td><?php echo $_SESSION['user']['level']; ?></td>
             </tr>
             <tr>
                 <td width="100">Tanggal Login</td>

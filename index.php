@@ -39,7 +39,7 @@ if (!isset($_SESSION['user'])) {
                         </a>
                         <div class="sb-sidenav-menu-heading">Navigasi</div>
                         <?php
-                        if ($_SESSION['user']['role'] != 'peminjam') {
+                        if ($_SESSION['user']['level'] != 'peminjam') {
                         ?>
                             <a class="nav-link" href="?page=kategori">
                                 <div class="sb-nav-link-icon"><i class="fas fa-grip"></i></div>
@@ -62,7 +62,7 @@ if (!isset($_SESSION['user'])) {
                         </a>
 
                         <?php
-                        if ($_SESSION['user']['role'] != 'peminjam') {
+                        if ($_SESSION['user']['level'] != 'peminjam') {
                         ?>
                             <a class="nav-link" href="?page=laporan">
                                 <div class="sb-nav-link-icon"><i class="fas fa-address-book"></i></div>
