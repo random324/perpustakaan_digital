@@ -13,7 +13,8 @@
                         $penerbit = $_POST['penerbit'];
                         $tahun_terbit = $_POST['tahun_terbit'];
                         $deskripsi = $_POST['deskripsi'];
-                        $query = mysqli_query($koneksi, "UPDATE buku SET id_kategori='$id_kategori', judul='$judul', penulis='$judul', penerbit='$penerbit', tahun_terbit='$tahun_terbit', deskripsi='$deskripsi' WHERE id_buku=$id");
+                        $stok = $_POST['stok'];
+                        $query = mysqli_query($koneksi, "UPDATE buku SET id_kategori='$id_kategori', judul='$judul', penulis='$judul', penerbit='$penerbit', tahun_terbit='$tahun_terbit', deskripsi='$deskripsi', stok='$stok' WHERE id_buku=$id");
 
                         if ($query) {
                             echo '<script>alert("ubah data behasil!");</script>';
@@ -32,7 +33,7 @@
                                 $kat = mysqli_query($koneksi, "SELECT*FROM kategori");
                                 while ($kategori = mysqli_fetch_array($kat)) {
                                 ?>
-                                    <option <?php if($kategori['id_kategori'] == $data['id_kategori']) echo 'selected'; ?> value="<?php echo $kategori['id_kategori']; ?>"><?php echo $kategori['kategori']; ?></option>
+                                    <option <?php if ($kategori['id_kategori'] == $data['id_kategori']) echo 'selected'; ?> value="<?php echo $kategori['id_kategori']; ?>"><?php echo $kategori['kategori']; ?></option>
                                 <?php
                                 }
                                 ?>
@@ -60,6 +61,10 @@
                         <div class="col-md-8">
                             <textarea name="deskripsi" class="form-control" rows="5"><?php echo $data['deskripsi']; ?></textarea>
                         </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">Stok</div>
+                        <div class="col-md-8"><input type="number" value="<?php echo $data['stok']; ?>" class="form-control" name="stok"></div>
                     </div>
                     <div class="row">
                         <div class="col-md-4"></div>

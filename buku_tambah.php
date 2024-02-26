@@ -12,7 +12,8 @@
                         $penerbit = $_POST['penerbit'];
                         $tahun_terbit = $_POST['tahun_terbit'];
                         $deskripsi = $_POST['deskripsi'];
-                        $query = mysqli_query($koneksi, "INSERT INTO buku(id_kategori,judul,penulis,penerbit,tahun_terbit,deskripsi) values ('$id_kategori','$judul','$penulis','$penerbit','$tahun_terbit','$deskripsi')");
+                        $stok = $_POST['stok'];
+                        $query = mysqli_query($koneksi, "INSERT INTO buku(id_kategori,judul,penulis,penerbit,tahun_terbit,deskripsi,stok) values ('$id_kategori','$judul','$penulis','$penerbit','$tahun_terbit','$deskripsi','$stok')");
 
                         if ($query) {
                             echo '<script>alert("Tambah data behasil!");</script>';
@@ -57,6 +58,10 @@
                         <div class="col-md-8">
                             <textarea name="deskripsi" class="form-control" rows="5"></textarea>
                         </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">Stok</div>
+                        <div class="col-md-8"><input type="number" class="form-control" name="stok"></div>
                     </div>
                     <div class="row">
                         <div class="col-md-4"></div>

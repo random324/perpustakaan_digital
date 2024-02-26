@@ -13,7 +13,6 @@
                         $tanggal_pengembalian = $_POST['tanggal_pengembalian'];
                         $status_peminjaman = $_POST['status_peminjaman'];
                         $query = mysqli_query($koneksi, "UPDATE peminjaman set id_buku='$id_buku', tanggal_peminjaman='$tanggal_peminjaman', tanggal_pengembalian='$tanggal_pengembalian',status_peminjaman='$status_peminjaman' WHERE id_peminjaman=$id");
-
                         if ($query) {
                             echo '<script>alert("ubah data behasil!");</script>';
                         } else {
@@ -59,6 +58,8 @@
                             </select>
                         </div>
                     </div>
+                    <?php
+                    ?>
                     <div class="row">
                         <div class="col-md-4"></div>
                         <div class="col-md-8">

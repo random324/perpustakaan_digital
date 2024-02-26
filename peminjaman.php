@@ -37,12 +37,12 @@
                                 <?php
                                 }
                                 ?>
+                                
                             </td>
                         </tr>
                     <?php
                     }
                     ?>
-
                 </table>
             </div>
         </div>
