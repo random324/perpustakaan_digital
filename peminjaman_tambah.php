@@ -17,11 +17,9 @@
                         $stok_sebelum = $data_stok_sebelum['stok'];
 
                         if ($stok_sebelum > 0) {
-                            // Melakukan peminjaman buku
                             $query_pinjam = mysqli_query($koneksi, "INSERT INTO peminjaman(buku_id,user_id,tanggal_peminjaman,tanggal_pengembalian,status) values ('$buku_id','$user_id','$tanggal_peminjaman','$tanggal_pengembalian','$status')");
 
                             if ($query_pinjam) {
-                                // Mengurangi stok buku setelah peminjaman
                                 $stok_sesudah = $stok_sebelum - 1;
                                 mysqli_query($koneksi, "UPDATE buku SET stok = '$stok_sesudah' WHERE buku_id = '$buku_id'");
 
@@ -30,7 +28,6 @@
                                 echo '<script>alert("Tambah data gagal!");</script>';
                             }
                         } else {
-                            // Menampilkan pesan kesalahan jika stok buku habis
                             echo '<script>alert("Stok buku sedang habis!");</script>';
                         }
                     }

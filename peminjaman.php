@@ -31,10 +31,8 @@
                             <td>
                                 <?php if ($data['status'] != 'dikembalikan') {
                                 ?>
-                                    <!-- Tombol untuk mengedit data -->
                                     <a href="?page=peminjaman_ubah&&id=<?php echo $data['peminjaman_id']; ?>" class="btn btn-warning">Edit</a>
 
-                                    <!-- Input untuk buku_id_lama -->
                                     <form method="post" style="display: inline;">
                                         <input type="hidden" name="buku_id_lama" value="<?php echo $data['buku_id']; ?>">
                                     </form>

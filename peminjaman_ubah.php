@@ -12,23 +12,18 @@
                         $tanggal_pengembalian = $_POST['tanggal_pengembalian'];
                         $status = $_POST['status'];
 
-                        // Dapatkan data peminjaman
                         $query_peminjaman = mysqli_query($koneksi, "SELECT * FROM peminjaman WHERE peminjaman_id=$id");
                         $data_peminjaman = mysqli_fetch_array($query_peminjaman);
                         $buku_id_lama = $data_peminjaman['buku_id'];
                         $status_lama = $data_peminjaman['status'];
 
-                        // Perbarui status peminjaman
                         $query_update_peminjaman = mysqli_query($koneksi, "UPDATE peminjaman SET buku_id='$buku_id', tanggal_peminjaman='$tanggal_peminjaman', tanggal_pengembalian='$tanggal_pengembalian', status='$status' WHERE peminjaman_id=$id");
 
-                        // Perbarui jumlah stok buku jika status sebelumnya adalah 'dipinjam' dan status yang baru adalah 'dikembalikan'
                         if ($status_lama == 'dipinjam' && $status == 'dikembalikan') {
-                            // Dapatkan jumlah stok buku sebelumnya
                             $query_stok = mysqli_query($koneksi, "SELECT stok FROM buku WHERE buku_id=$buku_id_lama");
                             $data_stok = mysqli_fetch_array($query_stok);
                             $stok_sebelumnya = $data_stok['stok'];
 
-                            // Perbarui jumlah stok buku
                             $stok_baru = $stok_sebelumnya + 1;
                             $query_update_stok = mysqli_query($koneksi, "UPDATE buku SET stok=$stok_baru WHERE buku_id=$buku_id_lama");
                         }
