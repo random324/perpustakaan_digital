@@ -1,3 +1,3 @@
 <?php
 session_start();
-$koneksi = mysqli_connect('localhost', 'root', '', 'ukk_perpus2');
+$koneksi = mysqli_connect('localhost', 'root', '', 'ukk_perpus');

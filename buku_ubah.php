@@ -7,13 +7,13 @@
                     <?php
                     $id = $_GET['id'];
                     if (isset($_POST['submit'])) {
-                        $id_kategori = $_POST['id_kategori'];
+                        $kategori_id = $_POST['kategori_id'];
                         $judul = $_POST['judul'];
                         $penulis = $_POST['penulis'];
                         $penerbit = $_POST['penerbit'];
                         $tahun_terbit = $_POST['tahun_terbit'];
-                        $deskripsi = $_POST['deskripsi'];
-                        $query = mysqli_query($koneksi, "UPDATE buku SET id_kategori='$id_kategori', judul='$judul', penulis='$judul', penerbit='$penerbit', tahun_terbit='$tahun_terbit', deskripsi='$deskripsi' WHERE id_buku=$id");
+                        $stok = $_POST['stok'];
+                        $query = mysqli_query($koneksi, "UPDATE buku SET kategori_id='$kategori_id', judul='$judul', penulis='$penulis', penerbit='$penerbit', tahun_terbit='$tahun_terbit', stok='$stok' WHERE buku_id=$id");
 
                         if ($query) {
                             echo '<script>alert("ubah data behasil!");</script>';
@@ -21,22 +21,25 @@
                             echo '<script>alert("ubah data gagal!");</script>';
                         }
                     }
-                    $query = mysqli_query($koneksi, "SELECT*FROM buku WHERE id_buku=$id");
+                    $query = mysqli_query($koneksi, "SELECT*FROM buku WHERE buku_id=$id");
                     $data = mysqli_fetch_array($query);
                     ?>
                     <div class="row mb-3">
                         <div class="col-md-4">Kategori</div>
                         <div class="col-md-8">
-                            <select name="id_kategori" class="form_control">
+                            <select name="kategori_id" class="form_control">
                                 <?php
                                 $kat = mysqli_query($koneksi, "SELECT*FROM kategori");
                                 while ($kategori = mysqli_fetch_array($kat)) {
                                 ?>
-                                    <option <?php if($kategori['id_kategori'] == $data['id_kategori']) echo 'selected'; ?> value="<?php echo $kategori['id_kategori']; ?>"><?php echo $kategori['kategori']; ?></option>
+                                    <option <?php if($kategori['kategori_id'] == $data['kategori_id']) echo 'selected'; ?> value="<?php echo $kategori['kategori_id']; ?>"><?php echo $kategori['kategori']; ?></option>
                                 <?php
                                 }
                                 ?>
                             </select>
+
+
+                            
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -56,17 +59,15 @@
                         <div class="col-md-8"><input type="number" value="<?php echo $data['tahun_terbit']; ?>" class="form-control" name="tahun_terbit"></div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-md-4">Deskripsi</div>
-                        <div class="col-md-8">
-                            <textarea name="deskripsi" class="form-control" rows="5"><?php echo $data['deskripsi']; ?></textarea>
-                        </div>
+                        <div class="col-md-4">Stok</div>
+                        <div class="col-md-8"><input type="number" value="<?php echo $data['stok']; ?>" class="form-control" name="stok"></div>
                     </div>
                     <div class="row">
                         <div class="col-md-4"></div>
                         <div class="col-md-8">
                             <button type="submit" class="btn btn-primary" name="submit" value="submit">Save</button>
                             <button type="reset" class="btn btn-secondary">Reset</button>
-                            <a href="?page=buku" class="btn btn-danger">Kembali</a>
+                            <a href="?page=buku" class="btn btn-danger">Return</a>
                         </div>
                     </div>
 

@@ -4,31 +4,39 @@
         <div class="row">
             <div class="col-md-12">
                 <form method="post">
-                    <?php
-                    if (isset($_POST['submit'])) {
-                        $id_buku = $_POST['id_buku'];
-                        $id_user = $_SESSION['user']['id_user'];
-                        $tanggal_peminjaman = $_POST['tanggal_peminjaman'];
-                        $tanggal_pengembalian = $_POST['tanggal_pengembalian'];
-                        $status_peminjaman = $_POST['status_peminjaman'];
-                        $query = mysqli_query($koneksi, "INSERT INTO peminjaman(id_buku,id_user,tanggal_peminjaman,tanggal_pengembalian,status_peminjaman) values ('$id_buku','$id_user','$tanggal_peminjaman','$tanggal_pengembalian','$status_peminjaman')");
+                <?php
+                if (isset($_POST['submit'])) {
+                     $buku_id = $_POST['buku_id'];
+                     $user_id = $_SESSION['user']['user_id'];
+                     $tanggal_peminjaman = $_POST['tanggal_peminjaman'];
+                     $tanggal_pengembalian = $_POST['tanggal_pengembalian'];
+                     $status = $_POST['status'];
 
-                        if ($query) {
-                            echo '<script>alert("Tambah data behasil!");</script>';
-                        } else {
-                            echo '<script>alert("Tambah data gagal!");</script>';
-                        }
-                    }
-                    ?>
+                     $query_stok_sebelum = mysqli_query($koneksi, "SELECT stok FROM buku WHERE buku_id = '$buku_id'");
+                     $data_stok_sebelum = mysqli_fetch_assoc($query_stok_sebelum);
+                     $stok_sebelum = $data_stok_sebelum['stok'];
+
+                     $query_pinjam = mysqli_query($koneksi, "INSERT INTO peminjaman(buku_id,user_id,tanggal_peminjaman,tanggal_pengembalian,status) values ('$buku_id','$user_id','$tanggal_peminjaman','$tanggal_pengembalian','$status')");
+
+                 if ($query_pinjam) {
+                     $stok_sesudah = $stok_sebelum - 1;
+                     mysqli_query($koneksi, "UPDATE buku SET stok = '$stok_sesudah' WHERE buku_id = '$buku_id'");
+                    
+                     echo '<script>alert("Tambah data berhasil!");</script>';
+                } else {
+                     echo '<script>alert("Tambah data gagal!");</script>';
+                }
+            }
+                ?>
                     <div class="row mb-3">
                         <div class="col-md-4">Buku</div>
                         <div class="col-md-8">
-                            <select name="id_buku" class="form_control">
+                            <select name="buku_id" class="form_control">
                                 <?php
                                 $buk = mysqli_query($koneksi, "SELECT*FROM buku");
                                 while ($buku = mysqli_fetch_array($buk)) {
                                 ?>
-                                    <option value="<?php echo $buku['id_buku']; ?>"><?php echo $buku['judul']; ?></option>
+                                    <option value="<?php echo $buku['buku_id']; ?>"><?php echo $buku['judul']; ?></option>
                                 <?php
                                 }
                                 ?>
@@ -48,9 +56,9 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-md-4">Status Peminjaman</div>
+                        <div class="col-md-4">Status</div>
                         <div class="col-md-8">
-                            <select name="status_peminjaman" class="form-control">
+                            <select name="status" class="form-control">
                                 <option value="dipinjam">Dipinjam</option>
                                 <option value="dikembalikan">Dikembalikan</option>
                             </select>
@@ -61,7 +69,7 @@
                         <div class="col-md-8">
                             <button type="submit" class="btn btn-primary" name="submit" value="submit">Save</button>
                             <button type="reset" class="btn btn-secondary">Reset</button>
-                            <a href="?page=peminjaman" class="btn btn-danger">Kembali</a>
+                            <a href="?page=peminjaman" class="btn btn-danger">Return</a>
                         </div>
                     </div>
 
