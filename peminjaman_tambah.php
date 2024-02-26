@@ -4,30 +4,38 @@
         <div class="row">
             <div class="col-md-12">
                 <form method="post">
-                <?php
-                if (isset($_POST['submit'])) {
-                     $buku_id = $_POST['buku_id'];
-                     $user_id = $_SESSION['user']['user_id'];
-                     $tanggal_peminjaman = $_POST['tanggal_peminjaman'];
-                     $tanggal_pengembalian = $_POST['tanggal_pengembalian'];
-                     $status = $_POST['status'];
+                    <?php
+                    if (isset($_POST['submit'])) {
+                        $buku_id = $_POST['buku_id'];
+                        $user_id = $_SESSION['user']['user_id'];
+                        $tanggal_peminjaman = $_POST['tanggal_peminjaman'];
+                        $tanggal_pengembalian = $_POST['tanggal_pengembalian'];
+                        $status = $_POST['status'];
 
-                     $query_stok_sebelum = mysqli_query($koneksi, "SELECT stok FROM buku WHERE buku_id = '$buku_id'");
-                     $data_stok_sebelum = mysqli_fetch_assoc($query_stok_sebelum);
-                     $stok_sebelum = $data_stok_sebelum['stok'];
+                        $query_stok_sebelum = mysqli_query($koneksi, "SELECT stok FROM buku WHERE buku_id = '$buku_id'");
+                        $data_stok_sebelum = mysqli_fetch_assoc($query_stok_sebelum);
+                        $stok_sebelum = $data_stok_sebelum['stok'];
 
-                     $query_pinjam = mysqli_query($koneksi, "INSERT INTO peminjaman(buku_id,user_id,tanggal_peminjaman,tanggal_pengembalian,status) values ('$buku_id','$user_id','$tanggal_peminjaman','$tanggal_pengembalian','$status')");
+                        if ($stok_sebelum > 0) {
+                            // Melakukan peminjaman buku
+                            $query_pinjam = mysqli_query($koneksi, "INSERT INTO peminjaman(buku_id,user_id,tanggal_peminjaman,tanggal_pengembalian,status) values ('$buku_id','$user_id','$tanggal_peminjaman','$tanggal_pengembalian','$status')");
 
-                 if ($query_pinjam) {
-                     $stok_sesudah = $stok_sebelum - 1;
-                     mysqli_query($koneksi, "UPDATE buku SET stok = '$stok_sesudah' WHERE buku_id = '$buku_id'");
-                    
-                     echo '<script>alert("Tambah data berhasil!");</script>';
-                } else {
-                     echo '<script>alert("Tambah data gagal!");</script>';
-                }
-            }
-                ?>
+                            if ($query_pinjam) {
+                                // Mengurangi stok buku setelah peminjaman
+                                $stok_sesudah = $stok_sebelum - 1;
+                                mysqli_query($koneksi, "UPDATE buku SET stok = '$stok_sesudah' WHERE buku_id = '$buku_id'");
+
+                                echo '<script>alert("Tambah data berhasil!");</script>';
+                            } else {
+                                echo '<script>alert("Tambah data gagal!");</script>';
+                            }
+                        } else {
+                            // Menampilkan pesan kesalahan jika stok buku habis
+                            echo '<script>alert("Stok buku sedang habis!");</script>';
+                        }
+                    }
+                    ?>
+
                     <div class="row mb-3">
                         <div class="col-md-4">Buku</div>
                         <div class="col-md-8">

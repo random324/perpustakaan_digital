@@ -5,7 +5,7 @@
         <div class="row">
 
             <div class="col-mb-12">
-                <a href="?page=ulasan_tambah" class="btn btn-primary mb-3">+ Tambah Data</a>
+                <a href="?page=ulasan_tambah" class="btn btn-primary mb-3"><i class="fas fa-plus"></i>  Tambah Data</a>
 
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <tr>

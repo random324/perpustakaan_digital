@@ -14,8 +14,11 @@ if ($stok_sekarang > 0) {
     }
 } else {
     echo '<script>alert("Stok buku habis!");</script>';
+    // Menghentikan program jika stok habis
+    exit;
 }
 
+// Hanya tambahkan kembali stok jika stok tidak habis
 $stok_sekarang += 1;
 $query_update_stok = mysqli_query($koneksi, "UPDATE buku SET stok = '$stok_sekarang' WHERE buku_id = '$buku_id'");
 if (!$query_update_stok) {
@@ -23,4 +26,3 @@ if (!$query_update_stok) {
 } else {
     echo '<script>alert("Stok buku berhasil ditambahkan kembali!");</script>';
 }
-?>
